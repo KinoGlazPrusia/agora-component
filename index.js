@@ -1,4 +1,4 @@
-import AgoraComponent  from "./src/agoraIF.js";
+import AgoraComponent  from "./src/agora.js";
 
 const iframe = document.getElementById('a')
 

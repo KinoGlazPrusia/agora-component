@@ -1,4 +1,4 @@
-import { PlainComponent } from 'plain-reactive'
+import { PlainComponent } from '../node_modules/plain-reactive/src/index.js'
 
 class AgoraComponent extends PlainComponent {
     constructor() {
