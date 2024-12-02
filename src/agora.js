@@ -3,7 +3,7 @@ import './agora.css'
 
 class AgoraComponent extends PlainComponent {
     constructor() {
-        super('agora-component', 'dist/agora-bundle.css')
+        super('agora-component', 'https://cdn.jsdelivr.net/gh/KinoGlazPrusia/agora-component@main/dist/agora-bundle.css')
 
         this.loading = true
         this.error = null
