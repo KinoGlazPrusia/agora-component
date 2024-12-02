@@ -1,0 +1,305 @@
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+    
+    /* Wrapper */
+    .wrapper {
+        height: fit-content;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1em;
+    }
+
+    .agora {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .iframe-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        width: 100%;
+        min-height: 200px;
+    
+        background-color: red;
+    }
+    
+    /* Loader */
+    .loader {
+        width: 100%;
+        height: 100%;
+        min-height: 250px;
+    
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+    }
+    
+    .circle {
+        width: 1em;
+        height: 1em;
+    
+        background-color: #937ca4;
+    
+        border-radius: 100pt;
+    
+        animation: dance 400ms ease-in-out infinite alternate;
+    
+        transition: 300ms;
+    }
+    
+    @keyframes dance {
+        0% {
+            transform: translateY(0%) scale(1);
+            background-color: #644380;
+        }
+        100% {
+            transform: translateY(150%) scale(2);
+            background-color: #359aba;
+        }
+    }
+    
+    /* Button Container */
+    .button-container {
+        margin-block: 0 !important;
+        padding-block: 1.5em;
+    
+        width: 100%;
+        max-width: 800px;
+    
+        display: flex;
+        justify-content: space-around;
+        margin: 20px auto;
+        flex-wrap: wrap;
+        gap: 1em;
+    
+        position: relative;
+    }
+    
+    .button {
+        cursor: pointer;
+        appearance: none;
+    
+        margin: 0;
+        padding: 0;
+    
+        height: 140px;
+        width: 140px;
+    
+        display: grid;
+        place-content: center;
+    
+        border: 3px solid rgba(255, 255, 255, 0);
+        border-radius: 100pt;
+    
+        background-color: red;
+    
+        transition: 300ms;
+    
+        position: relative;
+    
+        overflow: hidden;
+    }
+    
+    .button:hover, .button:active, .button.selected {
+        outline: none;
+        border: 3px solid rgba(255, 255, 255, 0) !important;
+    }
+    
+    .button span {
+        padding: 2em;
+    
+        text-align: left;
+        text-wrap: wrap;
+        color: white;
+        font-size: 1.1em;
+        font-weight: bold;
+        font-family: "Roboto", sans-serif;
+    
+        z-index: 10;
+    
+        transition: 300ms;
+    }
+    
+    /* button.selected span {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        text-decoration-thickness: 2px;
+    } */
+    
+    .button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        transform: translate(50%, 200%) scale(1);
+    
+        border-radius: 100pt;
+    
+        width: 50%;
+        height: 50%;
+    
+        background-color: blue;
+    
+        transition: transform 350ms ease-in-out;
+    }
+    
+    .button:hover::before {
+        transform: translate(50%, 50%) scale(2);
+    }
+    
+    .button::after {
+        pointer-events: none;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    
+        width: 95%;
+        height: 95%;
+    
+        border: 2px solid transparent;
+        border-radius: 100pt;
+    
+        transform: translate(-50%, -50%);
+    
+        z-index: 9999;
+    
+        transition: 300ms;
+    }
+    
+    .button.selected::after {
+        border: 2px solid white;
+    }
+    
+    .button.courses {background-color: #644380;}
+    .button.courses.selected::before {
+        transform: translate(50%, 50%) scale(2);
+    }
+    .button.courses::before {
+        background-color: #784ba0;
+    }
+    
+    .button.joint-programmes {background-color: #3F7C46;}
+    .button.joint-programmes.selected::before {
+        transform: translate(50%, 50%) scale(2);
+    }
+    .button.joint-programmes::before {
+        background-color: #41994b;
+    }
+    
+    .button.extra-curricular {background-color: #317A7B;}
+    .button.extra-curricular.selected::before {
+        transform: translate(50%, 50%) scale(2);
+    }
+    .button.extra-curricular::before {
+        background-color: #349294 ;
+    }
+    
+    .button.moocs {background-color: #365D7B;}
+    .button.moocs.selected::before {
+        transform: translate(50%, 50%) scale(2);
+    }
+    .button.moocs::before {
+        background-color: #396c94;
+    }
+    
+    .clicked {
+        animation-name: clicked;
+        animation-duration: 300ms;
+    }
+    
+    @keyframes clicked {
+        0% {transform: scale(1);}
+        50% {transform: scale(1.05);}
+        100% {transform: scale(1);}
+    }
+    
+    @keyframes blink {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+</style>
+    
+<div>
+    <script>
+        const agora = document.createElement('script')
+        agora.src = './dist/agora-bundle.js'
+        agora.type = 'module'
+        
+        document.head.append(agora)
+
+        // Add click animation to buttons
+        function animateClick(el) {
+            el.classList.add('clicked')
+            el.onanimationend = () => el.classList.remove('clicked')
+        }
+
+        function navigateTo(url) {
+            const agora = document.querySelector('agora-component')
+            agora.navigateTo(url)
+        }
+    </script>
+</div>
+
+<!-- Description -->
+<div>
+    Unite!’s offerings and activities are open to students enrolled in any of our
+    <a 
+    text="our nine partner universities" 
+    href="../../about-us/partners" 
+    data-linktype="external" 
+    data-val="https://www.unite-university.eu/about-us/partners">
+        our nine partner universities
+    </a>. Below, you’ll find a variety of academic and non-academic opportunities. 
+    <br><br>
+    Explore available offers by clicking on any of the circled categories first, then use the filters to find something that suits you.
+    <br><br>
+</div>
+
+<!-- ECTS notice -->
+<div>
+    <em>
+        *Please note: Individual applicants should check with their home university to ensure that ECTS credits are recognised towards their degree programme.
+    </em>
+</div>
+
+<!-- Navigation section -->
+<div class="wrapper">
+    <!-- Navigation buttons -->
+    <div class="button-container">
+        <!-- Catalogue buttons -->
+        <button 
+        class="button courses" 
+        onclick="navigateTo('/student-catalogue/course')">
+            <span>Courses</span>
+        </button>
+        <button 
+        class="button joint-programmes" 
+        onclick="navigateTo('student-catalogue/jp')">
+            <span>Joint Master's Programmes</span>
+        </button>
+        <button 
+        class="button extra-curricular" 
+        onclick="navigateTo('student-catalogue/extra-act')">
+            <span>Extracurricular<br />Activities</span>
+        </button>
+        <button 
+        class="button moocs" 
+        onclick="navigateTo('/student-catalogue/mooc')">
+            <span>MOOCs</span> 
+        </button>
+    </div>
+
+    <!-- Content display section -->
+    <agora-component class="agora" domain="http://localhost:8000" url="/student-catalogue/mooc" auto-resize></agora-component>
+</div>

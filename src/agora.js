@@ -1,13 +1,15 @@
 import { PlainComponent } from '../node_modules/plain-reactive/src/index.js'
+import './agora.css'
 
 class AgoraComponent extends PlainComponent {
     constructor() {
-        super('agora-component', 'src/agora.css')
+        super('agora-component', 'dist/agora-bundle.css')
 
         this.loading = true
         this.error = null
 
-        this.initialSrc = this.getAttribute('initial-src')
+        this.domain = this.getAttribute('domain')
+        this.url = this.getAttribute('url')
         this.contextId = Math.floor(Math.random() * 10000)
     }
 
@@ -27,7 +29,7 @@ class AgoraComponent extends PlainComponent {
             <iframe 
                 name="${this.contextId}" 
                 class="iframe" 
-                src="${this.initialSrc}" 
+                src="${this.domain}${this.url.startsWith('/') ? this.url : `/${this.url}`}"
                 allow="clipboard-write">
             </iframe>
         `
@@ -90,8 +92,9 @@ class AgoraComponent extends PlainComponent {
     }
 
     navigateTo(url) {
-        this.loading = true
-        this.$('.iframe').src = url
+        this.setLoading(true)
+        this.url = url.startsWith('/') ? url : `/${url}`
+        this.$('.iframe').src = `${this.domain}${this.url}`
     }
 }
 
